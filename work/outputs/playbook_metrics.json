@@ -1,0 +1,14 @@
+{
+  "honest_precision_at_50": 0.4,
+  "base_rate": 0.2614156200615487,
+  "n_scored_pages": 12023,
+  "n_training_clients": 28,
+  "impressions_range": [
+    500,
+    517715
+  ],
+  "position_range": [
+    0.2,
+    20.0
+  ]
+}
