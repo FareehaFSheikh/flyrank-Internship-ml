@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which pages should a reviewer check first? — CTR Underperformance Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAFAF8;
+    --ink: #14213D;
+    --body: #2B2B2B;
+    --accent: #C1121F;
+    --rule: #D8D3C9;
+    --confirm: #3A5A40;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background-color: var(--paper);
+    background-image: radial-gradient(circle at 20% 0%, rgba(20,33,61,0.025), transparent 45%),
+                      radial-gradient(circle at 100% 30%, rgba(193,18,31,0.02), transparent 40%);
+    color: var(--body);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  h1, h2, h3 {
+    font-family: 'Source Serif 4', serif;
+    color: var(--ink);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .wide { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+
+  header.hero {
+    border-bottom: 1px solid var(--rule);
+    padding: 88px 0 48px;
+  }
+  header.hero .eyebrow {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.85rem;
+    color: #7a7a7a;
+    margin-bottom: 18px;
+    letter-spacing: 0.01em;
+  }
+  header.hero h1 {
+    font-size: 2.3rem;
+    font-weight: 700;
+    margin: 0 0 24px;
+    max-width: 680px;
+  }
+  header.hero > p {
+    color: #3a3a3a;
+  }
+  .stat-strip {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+  .stat { border-left: 3px solid var(--accent); padding: 2px 0 2px 16px; }
+  .stat .num { font-family: 'Source Serif 4', serif; font-size: 1.65rem; color: var(--ink); font-weight: 600; letter-spacing: -0.01em; }
+  .stat .label { font-size: 0.82rem; color: #6b6b6b; margin-top: 4px; }
+
+  section { padding: 48px 0; border-bottom: 1px solid var(--rule); }
+  section:last-of-type { border-bottom: none; }
+  section h2 {
+    font-size: 1.5rem;
+    margin: 0 0 20px;
+  }
+  section h2 .num {
+    color: var(--accent);
+    font-weight: 600;
+    margin-right: 10px;
+  }
+  p { margin: 0 0 16px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 8px; }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 0.95rem;
+  }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); }
+  th { font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; color: var(--ink); border-bottom: 2px solid var(--ink); }
+  tr.highlight td { color: var(--confirm); font-weight: 600; }
+
+  .callout {
+    border-left: 3px solid var(--accent);
+    background: #fff;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 0.95rem;
+  }
+  .caption { font-size: 0.85rem; color: #5b5b5b; margin-top: -8px; }
+  code { background: #F0EEE8; padding: 1px 5px; border-radius: 3px; font-size: 0.9em; }
+
+  footer {
+    padding: 40px 0 64px;
+    font-size: 0.9rem;
+    color: #5b5b5b;
+  }
+  a { color: var(--ink); }
+  a:hover { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    header.hero h1 { font-size: 1.6rem; }
+    .stat-strip { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <p class="eyebrow">FlyRank ML Internship — Capstone Research</p>
+  <h1>Which pages should a content reviewer check first?</h1>
+  <p style="max-width:640px;">Some pages that rank well in search still get far fewer clicks than similar pages at the same rank. Using a March 2026 slice of FlyRank's production search data (12,023 visible pages, drawn from a 9.8-million-row monthly warehouse), I built a simple rule baseline, then a Logistic Regression model, to flag which pages are worth a content reviewer's time first. Under an honest client-grouped test split, the model reaches 40.0% precision@50 — a real lift over both random guessing (26.1%) and a naive position-only rule (34.0%), though far short of a circular baseline I deliberately caught and discarded. This is decision-support for prioritizing manual review, not a proven fix, and not tested outside the page-visibility range it was trained on.</p>
+  <div class="stat-strip">
+    <div class="stat"><div class="num">26.1% → 40.0%</div><div class="label">precision@50, random guess → honest model</div></div>
+    <div class="stat"><div class="num">12,023</div><div class="label">visible pages analyzed</div></div>
+    <div class="stat"><div class="num">28</div><div class="label">clients, grouped split, zero overlap</div></div>
+  </div>
+</header>
+
+<section class="wrap">
+  <h2><span class="num">01</span>The problem</h2>
+  <p>A content reviewer opens their dashboard and sees thousands of pages. Some are getting fewer clicks than they should — but a low click count on its own means nothing. A page ranked 15th getting 0.2% clicks might be completely normal. The same 0.2% on a page ranked 3rd is a real problem. Telling those two situations apart, by eye, across thousands of pages, isn't realistic for one person to do manually.</p>
+  <p>This work answers one question: <strong>which pages, ranked where they are, are getting fewer clicks than similar pages nearby — and are worth a reviewer's time to check first?</strong></p>
+  <p>The stakes here are genuinely low on both sides, which matters for how this should be used. If a flagged page turns out fine, a reviewer loses a few minutes. If a real problem page gets missed, it's a missed opportunity, not a crisis. That asymmetry is part of why a scoring approach — imperfect, honest about its limits — is a reasonable tool here, rather than something that needs to be perfect before it's useful.</p>
+</section>
+<section class="wrap">
+  <h2><span class="num">02</span>Data</h2>
+  <p><strong>Source and scope.</strong> I used FlyRank's Hugging Face-hosted warehouse, scoped to March 2026 — a safe middle month, deliberately not the most recent month, which is reserved as a sealed test set.</p>
+  <p><strong>Grain, verified.</strong> One row = one page's performance on one day. March 2026 has 9,841,378 rows across 331,437 distinct pages. I confirmed the grain with a group-by check (page + client + date) that returned zero duplicate groups.</p>
+  <div class="callout">Only 36.7% of rows (3,611,061) have usable search data (<code>gsc_data_available = TRUE</code>). Pages or clients with short search history are effectively invisible in this slice — findings here may not generalize evenly across all of FlyRank's clients.</div>
+  <p><strong>The working slice</strong> used throughout my baseline, model, and validation: pages with <code>impressions_90d ≥ 500</code> and <code>avg_position</code> between 1-20 — "actually visible in search" — narrowing to <strong>12,023 pages</strong>.</p>
+  <p><strong>Deliberately excluded, and why:</strong></p>
+  <ul>
+    <li>AI-assistant referral columns (<code>ai_chatgpt</code>, <code>ai_perplexity</code>, etc.) — not relevant to this question</li>
+    <li><code>trend_direction</code>, <code>trend_pct</code> — flagged as label-source fields, never safe as features</li>
+    <li><code>ctr</code>, all click-count columns — these define my own label, so using them as features would be circular</li>
+    <li>Post-click behavior columns (<code>pageviews_90d</code>, <code>engagement_rate</code>, etc.) — downstream of the outcome, not a legitimate input</li>
+    <li>FlyRank's own product flags (<code>health_score</code>, <code>needs_ctr_fix</code>, etc.) — confirmed absent from this dataset entirely</li>
+  </ul>
+  <p><strong>Public-safe:</strong> all IDs are pseudonymous hashes, used only for grouping the train/test split — never as features, never shown alongside anything identifying.</p>
+</section>
+<section class="wrap">
+  <h2><span class="num">03</span>Methodology</h2>
+  <p><strong>Baseline (a rule, before any model).</strong> Score = how far a page's CTR falls below the median CTR of other pages in its own position tier (<code>tier_median_ctr − page_ctr</code>, floored at 0). Reason code: <code>ctr_below_tier_peers</code>. Action: review title and meta description.</p>
+  <p><strong>Two signal checks shaped this rule.</strong> Signal A tested whether CTR actually drops as position worsens — verdict <strong>MIXED</strong> (the worst tier was clearly worse, but the very best tier didn't beat the next one down, likely a small-sample effect). Signal B tested whether high-traffic pages have more room to improve — verdict <strong>OPPOSITE</strong> (high-traffic pages were already outperforming their tier, not underperforming). Because of Signal B, traffic volume is used only as an eligibility gate, never as a score multiplier.</p>
+  <p><strong>Model.</strong> Logistic Regression — the question is "which pages to check first" (a ranking question), not a fixed label, so a classifier's predicted probability gives a natural ranking, and its coefficients stay readable enough to explain in plain words.</p>
+  <p><strong>Label.</strong> No reviewer has manually confirmed which pages truly have a title problem, so I used a proxy: the top 25% of CTR gaps. This is grounded in a real, observed number, not someone else's rule.</p>
+  <p><strong>Features.</strong> 20 columns describing a page before anyone clicks (search demand, competition, content type, position, freshness, and similar). Deliberately excluded: CTR, all click-count columns, post-click behavior, and any FlyRank product flag — using any of these would let a model read back its own label instead of learning a real pattern.</p>
+  <p><strong>Split.</strong> Grouped by client, not random — confirmed zero client overlap between train and test. This matters: a random split lets the same client's pages leak between train and test, which (see Results) inflates the score artificially.</p>
+  <p><strong>Leakage checks, run twice.</strong> First, a deliberate "cheat" feature built from the answer itself: an honest model scored 0.0158, and adding the cheat column jumped it to a suspicious 1.0000 — confirming the leak trap works. Second, a full audit of the final feature set against three leakage categories (label-derived, future-window, product-flag) — all three came back empty.</p>
+</section>
+<section class="wrap">
+  <h2><span class="num">04</span>Results</h2>
+  <p>My first comparison table showed the rule-based baseline scoring a perfect 1.000 precision@50 — too good to be true, and it was. The label is defined directly from the same number the baseline ranks by, so it wasn't predicting anything; it was reading back its own answer key. That's not a real test.</p>
+  <div class="callout">A circular evaluation doesn't just look wrong in hindsight — it actively hides whether a model is doing real work. Catching this before reporting it is what separates a checked result from an assumed one.</div>
+  <p>For a fair comparison, every method below is measured the same way, on the same held-out test rows, against a naive rule that doesn't share any information with the label:</p>
+  <table>
+    <tr><th>Method</th><th>Precision@50</th></tr>
+    <tr><td>Base rate (random guessing)</td><td>26.1%</td></tr>
+    <tr><td>Naive rule (worst position first)</td><td>34.0%</td></tr>
+    <tr><td>Model — random split (leaky, discarded)</td><td>72.0%</td></tr>
+    <tr class="highlight"><td>Model — honest grouped split</td><td>40.0%</td></tr>
+  </table>
+  <p class="caption">The rule-based baseline (1.000) is omitted here as invalid — see above.</p>
+  <p>The gap between the random-split score (72.0%) and the honest grouped-split score (40.0%) is itself a finding: 32 points of that "performance" was the model partly memorizing specific clients, not learning anything general. The number I trust and report is <strong>40.0%</strong> — a real, modest lift over both random guessing and the naive rule, on clients the model never saw during training.</p>
+</section>
+<section class="wrap">
+  <h2><span class="num">05</span>Limitations</h2>
+  <ul>
+    <li><strong>Proxy label, not human-confirmed.</strong> "Needs review" means "top 25% CTR gap," not "a person checked and confirmed the title is broken." A large gap can come from cannibalization, seasonality, or a search feature capturing the click — not only a bad title.</li>
+    <li><strong>Cross-sectional, not causal.</strong> This is one snapshot, no before/after test. The right claim is "this page looks worth reviewing," never "fixing the title will improve CTR."</li>
+    <li><strong>Narrow, verified boundaries.</strong> Trained and tested on 28 clients, impressions 500–517,715, positions 0.2–20.0. No evidence this ranking holds outside that range.</li>
+    <li><strong>A real error pattern.</strong> The model over-trusts recent updates as a signal of "this page is fine" — three of its most confident wrong predictions were all pages updated in the last 30 days that still had large, real CTR gaps.</li>
+  </ul>
+  <p>One example of walking a claim back to what the evidence actually supports: an early draft called one flagged page "my strongest pick." That page does have real search demand, real visibility, and zero clicks — but "strongest pick" implied a fix would work, which was never tested. The honest version: <em>"this page looks worth reviewing first, because the combination of visibility and zero clicks is unusual — whether a title change would help hasn't been tested."</em></p>
+</section>
+<section class="wrap">
+  <h2><span class="num">06</span>Ranked recommendations</h2>
+  <p>The final output is a ranked queue, not a bare score — each page carries a plain-language reason built from its own features, so a reviewer can trust it in seconds rather than interpreting a number.</p>
+  <div class="callout">Example reason: "ranks on page 1; hasn't been updated in 210 days; has real search demand (320/mo)." Every row gets the same action (review title and meta description) and the same reason code (<code>model_flagged_likely_underperformer</code>), ranked by predicted probability.</div>
+  <p><strong>What a reviewer must check before acting:</strong> the actual title and content, not just the score; whether a sibling page on the same site might be capturing the click instead; whether the tracked keyword has any real measured search volume at all.</p>
+  <p><strong>What should never be automated:</strong> publishing a new title without human review; deprioritizing a page based on a low score (a low score means "not flagged," not "confirmed fine"); using this score in any client-facing report or billing decision.</p>
+  <p><strong>Signs this playbook has gone stale:</strong> a large shift in the overall base rate (currently 26.1%); new clients very different from the 28 in this training set; content types or providers that never appeared in training; reviewers reporting flagged pages "look fine" more often than the measured 40.0% precision would predict.</p>
+</section>
+<section class="wrap">
+  <h2><span class="num">07</span>Reproducibility</h2>
+  <p>All code, in order, lives in this repository under <code>work/notebooks/</code>:</p>
+  <ul>
+    <li><a href="../work/notebooks/w01_research_question.ipynb">Research question</a></li>
+    <li><a href="../work/notebooks/w02_ml_task_framing.ipynb">ML task framing</a></li>
+    <li><a href="../work/notebooks/w03_data_contract.ipynb">Data contract + leak trap</a></li>
+    <li><a href="../work/notebooks/w04_baseline_score.ipynb">Rule baseline</a></li>
+    <li><a href="../work/notebooks/w05_model.ipynb">Model + comparison</a></li>
+    <li><a href="../work/notebooks/w06_validation_audit.ipynb">Validation + claim audit</a></li>
+    <li><a href="../work/notebooks/w07_action_playbook.ipynb">Action playbook</a></li>
+  </ul>
+  <p>All splits use <code>random_state=42</code> for exact reproducibility. Every notebook runs top to bottom with no errors and regenerates its own outputs on each run.</p>
+</section>
+<section class="wrap">
+  <h2><span class="num">08</span>Acknowledgments</h2>
+  <p>Built on the FlyRank ML Internship dataset — <a href="https://flyrank.ai" target="_blank" rel="noopener">flyrank.ai</a>.</p>
+</section>
+<!-- SECTIONS GO HERE -->
+
+<footer class="wrap">
+  <p>Capstone project for the FlyRank ML Internship. Repository and all notebooks are linked above.</p>
+</footer>
+
+</body>
+</html>
