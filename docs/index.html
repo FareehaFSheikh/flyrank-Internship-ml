@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Which pages should a reviewer check first? — CTR Underperformance Research</title>
-<p style="font-size:1.05rem; color:#3a3a3a; margin-bottom:24px;">
-  <strong>Fareeha Fayyaz Sheikh</strong> &nbsp;&middot;&nbsp; FlyRank ML Internship &nbsp;&middot;&nbsp; September 2026
-</p>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -122,6 +119,9 @@
 <header class="hero wrap">
   <p class="eyebrow">FlyRank ML Internship — Capstone Research</p>
   <h1>Which pages should a content reviewer check first?</h1>
+  <p style="font-size:1.05rem; color:#3a3a3a; margin-bottom:24px;">
+  <strong>Fareeha Fayyaz Sheikh</strong> &nbsp;&middot;&nbsp; FlyRank ML Internship &nbsp;&middot;&nbsp; September 2026
+</p>
   <p style="max-width:640px;">Some pages that rank well in search still get far fewer clicks than similar pages at the same rank. Using a March 2026 slice of FlyRank's production search data (12,023 visible pages, drawn from a 9.8-million-row monthly warehouse), I built a simple rule baseline, then a Logistic Regression model, to flag which pages are worth a content reviewer's time first. Under an honest client-grouped test split, the model reaches 40.0% precision@50 — a real lift over both random guessing (26.1%) and a naive position-only rule (34.0%), though far short of a circular baseline I deliberately caught and discarded. This is decision-support for prioritizing manual review, not a proven fix, and not tested outside the page-visibility range it was trained on.</p>
   <div class="stat-strip">
     <div class="stat"><div class="num">26.1% → 40.0%</div><div class="label">precision@50, random guess → honest model</div></div>
